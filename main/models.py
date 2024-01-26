@@ -6,7 +6,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     id_user = models.IntegerField()
     bio= models.TextField(blank=True)
-    pro_photo= models.ImageField(upload_to='profilephotos',default='blank-photo.jpg')
+    pro_photo= models.ImageField(upload_to='profilephotos',default='blank-mages.png')
 
     def __str__(self):
         return self.user.username
