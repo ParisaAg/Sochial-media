@@ -24,25 +24,32 @@
           
 
             <div class="container m-auto">
-                <div style=" float:right; font:40px;color: red">Home</div>
-                <h1 class="text-2xl leading-none text-gray-900 tracking-tight mt-3"> account profile </h1>
-                <ul class="mt-5 -mr-3 flex-nowrap lg:overflow-hidden overflow-x-scroll uk-tab">
+                <div class="bg-pink-500 pink-500 px-6 py-3 rounded-md shadow text-white" style=" float:right;"><a href="{% url 'index' %}">Home</a></div>
+                <h1 class="text-2xl leading-none text-gray-900 tracking-tight mt-3"> {{ user.username }}'s profile </h1>
+{% comment %}                <ul class="mt-5 -mr-3 flex-nowrap lg:overflow-hidden overflow-x-scroll uk-tab">
                     <li class="uk-active"><a href="#">General</a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Privacy</a></li>
                     <li><a href="#">Notification</a></li>
                     <li><a href="#">Social links</a></li>
                     <li><a href="#">Security</a></li>
-                </ul>
-
+                </ul>{% endcomment %}
+                <br>
+                <br>
+<hr>
+<hr>
+<hr>
+<hr>
+<hr>
                 <div class="grid lg:grid-cols-3 mt-12 gap-8">
                     <div>
-                        <h3 class="text-xl mb-2"> Basic</h3>
+                        <h3 class="text-xl mb-2"> personal info</h3>
                         <p></p>
                     </div>
                     <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
-    
-                       <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="grid grid-cols-2 gap-3 lg:p-6 p-4">
                            <div>
                                <label for=""> First name</label>
                                <input type="text" placeholder="Your name.." class="shadow-none bg-gray-100">
@@ -51,24 +58,25 @@
                                <label for=""> Last name</label>
                                <input type="text" placeholder="Your name.." class="shadow-none bg-gray-100">
                             </div>
-                            <div class="col-span-2">
-                                <label for=""> Email</label>
-                                <input type="text" placeholder="Your name.." class="shadow-none bg-gray-100">
+                           <div class="col-span-2">
+                                <label for=""> profile photo</label>
+                                <img width="150px" height="150px" src="{{ user_profile.pro_photo.url }}">
+                                <input type="file" name="image" value="" class="shadow-none bg-gray-100">
                             </div>
                             <div class="col-span-2">
-                                <label for="about">About me</label>  
-                                <textarea id="about" name="about" rows="3"  class="shadow-none bg-gray-100"></textarea>
+                                <label for="bio">About me</label>
+                                <textarea id="bio" name="bio" rows="3"  class="shadow-none bg-gray-100">{{ user_profile.bio }}</textarea>
                             </div>
                        </div>
     
-                       <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
-                           <button class="p-2 px-4 rounded bg-gray-50 text-red-500"> Cancel </button>
-                           <button type="button" class="button bg-blue-700"> Save </button>
-                       </div>
-    
+                                <div class="bg-gray-10 p-6 pt-0 flex justify-end space-x-3">
+                                <button class="p-2 px-4 rounded bg-gray-50 text-red-500"><a href="{% url 'accounts' %}"> Cancel </a></button>
+                                <button type="submit" class="button bg-blue-700"> Save </button>
+                            </div>
+                        </form>
                     </div>
 
-                    <div>
+{% comment %}                    <div>
                         <h3 class="text-xl mb-2"> Privacy</h3>
                         <p> </p>
                     </div>
@@ -125,7 +133,7 @@
                     </div>
     
                     </div>
-                    <br>
+                    <br>{% endcomment %}
 
                 </div>
 
