@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile
+from .models import Profile,Post,Like
 # Create your views here.
 def index(request):
-    return render(request,'index.html')
+    all_posts=Post.objects.all()
+    user_object=User.objects.get(username=request.user.username)
+    user_profile=Profile.objects.get(user=user_object)
+    return render(request,'index.html',{'user_profile': user_profile,'all_posts':all_posts})
 
 def signup(request):
     if request.method == "POST":
@@ -76,3 +79,35 @@ def accounts(request):
 
 
     return render(request,'accounts.html',{'user_profile': user_profile})
+
+
+@login_required(login_url='signin')
+def post(request):
+    if request.method=='POST':
+        user= request.user.username
+        content = request.FILES.get('upload_post')
+        captions = request.POST['captions']
+        NewPost=Post.objects.create(user=user,content=content,captions=captions)
+        NewPost.save()
+        return redirect('index')
+    else:
+        return redirect('index')
+@login_required(login_url='signin')
+def like(request):
+    username = request.user.username
+    post_id = request.GET.get('post_id')
+    post = Post.objects.get(id=post_id)
+    filtred_likes=Like.objects.filter(post_id=post_id,username=username).first()
+
+    if filtred_likes == None:
+        new_like=Like.objects.create(post_id=post_id,username=username)
+        new_like.save()
+        post.no_likes += 1
+        post.save()
+        return redirect('index')
+    else:
+        filtred_likes.delete()
+        post.no_likes -=1
+        post.save()
+        return redirect('index')
+
