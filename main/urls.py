@@ -9,5 +9,6 @@ path('like', views.like, name='like'),
 path('signin', views.signin, name='signin'),
 path('logout', views.logout, name='logout'),
 path('post', views.post, name='post'),
-path('accounts', views.accounts, name='accounts')
+path('accounts', views.accounts, name='accounts'),
+path('profile/<str:pk>/', views.profile, name='profile'),
 ]

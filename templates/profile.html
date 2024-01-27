@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-	<title>Profile - {{username}}</title>
+	<title>Profile - {{user_profile.user.username}}</title>
    <!-- <link rel="icon" href="images/fav.png" type="image/png" sizes="16x16"> -->
     
     <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
@@ -21,42 +21,25 @@
 <body>
 <!--<div class="se-pre-con"></div>-->
 <div class="theme-layout">
-	
+
 	</div>
 	
 	<section>
 			<div class="feature-photo">
-				<figure><img src="{% static 'images/resources/timeline-1.jpg' %}" alt=""></figure>
+				<figure><img src="{% static 'images/resources/bg2.jpg' %}" style="width:1550px; height: 400px" alt=""></figure>
 				<form>
 					<div class="add-btn">
-					<span style="color: white; font-size: 27px; margin-right: 520px;"><b><u><a href="/">Home</a></u></b></span>
-					<span style="color: white; font-size: 27px;"><b>11 Post</b></span>
-					<span style="color: white; font-size: 27px;"><b>1.7m followers</b></span>
-					<span style="color: white; font-size: 27px;"><b>3.5k following</b></span>
+					<span style="color: white; font-size: 27px; margin-right: 520px;"><b><u><a href="{% url 'index' %}">Home</a></u></b></span>
 					<a href="" title="" data-ripple=""><button style="background-color: #ffc0cb; border: #ffc0cb;">Follow</button></a>
 					
 					</div>
 				</form>
-
-				<!-- <form class="edit-phto">
-					<i class="fa fa-camera-retro"></i>
-					<label class="fileContainer">
-						Upload Cover Photo
-					<input type="file"/>
-					</label>
-				</form> -->
 				<div class="container-fluid">
 					<div class="row merged">
 						<div class="col-lg-2 col-sm-3">
 							<div class="user-avatar">
 								<figure>
-									<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 100%;" alt="">
-									<form class="edit-phto">
-										<i class="fa fa-camera-retro"></i>
-										<label class="fileContainer">
-											<a href="#account-settings">Upload Profile Photo</a>
-										</label>
-									</form>
+									<img src="{{user_profile.pro_photo.url}}" style="height: 250px; width: 100%;" alt="">
 								</figure>
 							</div>
 						</div>
@@ -64,8 +47,8 @@
 							<div class="timeline-info">
 								<ul>
 									<li class="admin-name">
-									  <h5 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>@username</b><!--<i class="fa fa-check-circle" style="color: #48dbfb;" aria-hidden="true"></i>--></h5>
-									  <!--<span>Group Admin</span>-->
+									  <h3 style="color: black;white-space: nowrap; width: 110px; font-size: 27px;"><b>{{user_profile.user.username}}</b></h3>
+
 									</li>
 									<!--<li>
 										<a class="" href="javascript:void(0)" title="" data-ripple="">Go live!</a>
@@ -92,8 +75,8 @@
 		</section><!-- top area -->
 		<section>
 			<div class="bio">
-				Bio goes here...
-			</div>
+                    {{user_profile.bio}}
+            </div>
 		</section>
 		
 	<section>
@@ -122,32 +105,20 @@
 							<div class="col-lg-6">
 								<div class="central-meta">
 									<ul class="photos">
-					
+					                    {% for post in user_posts %}
 										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
+											<a class="strip" href="{{ post.content.url }}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{ post.content.url }}" style="height: 250px; width: 300px;" alt=""></a>
 										</li>
-
-										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
-
-										<li>
-											<a class="strip" href="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
-												<img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" style="height: 250px; width: 300px;" alt=""></a>
-										</li>
-										
-										
+                                        {% endfor %}
 									</ul>
-									<!--<div class="lodmore"><button class="btn-view btn-load-more"></button></div>-->
-								</div><!-- photos -->
-							</div><!-- centerl meta -->
+								</div>
+							</div>
 							<div class="col-lg-3">
 								<aside class="sidebar static">
 									
 								</aside>
-							</div><!-- sidebar -->
+							</div>
 						</div>	
 					</div>
 				</div>
