@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User,auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile,Post,Like
+from .models import Profile,Post,Like,Followers
 # Create your views here.
 def index(request):
     all_posts=Post.objects.all()
@@ -92,6 +92,7 @@ def post(request):
         return redirect('index')
     else:
         return redirect('index')
+
 @login_required(login_url='signin')
 def like(request):
     username = request.user.username
@@ -122,3 +123,35 @@ def profile(request,pk):
         'user_posts':user_posts
     }
     return render(request,'profile.html',context)
+
+
+def follow(request):
+    if request.method =='POST':
+        follower=request.POST['follower']
+        user = request.POST['user']
+        if Followers.objects.filter(follower=follower, user=user).first():
+            delete_follower=Followers.objects.get(follower=follower,user=user)
+            delete_follower.delete()
+            return redirect('/profile/'+user)
+        else:
+            new_follower=Followers.objects.create(follower=follower,user=user)
+            new_follower.save()
+            return redirect('/profile/'+user)
+    else:
+        return redirect('index')
+
+def search(request):
+    if request.method == 'POST':
+        username = request.POST.get('username', '')  # Using get() to avoid KeyError
+        username_profile_list = []
+
+        username_objects = User.objects.filter(username__icontains=username)
+
+        for user in username_objects:
+            profile = Profile.objects.filter(user=user).first()  # Assuming user field in Profile model
+            if profile:
+                username_profile_list.append(profile)
+
+        return render(request, 'search.html', {'username_profile_list': username_profile_list})
+    else:
+        return render(request, 'search.html')
