@@ -142,13 +142,13 @@ def follow(request):
 
 def search(request):
     if request.method == 'POST':
-        username = request.POST.get('username', '')  # Using get() to avoid KeyError
+        username = request.POST.get('username', '')
         username_profile_list = []
 
         username_objects = User.objects.filter(username__icontains=username)
 
         for user in username_objects:
-            profile = Profile.objects.filter(user=user).first()  # Assuming user field in Profile model
+            profile = Profile.objects.filter(user=user).first()
             if profile:
                 username_profile_list.append(profile)
 
